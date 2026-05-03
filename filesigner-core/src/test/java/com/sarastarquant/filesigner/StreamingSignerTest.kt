@@ -1,6 +1,6 @@
-package io.github.pzverkov.filesigner
+package com.sarastarquant.filesigner
 
-import io.github.pzverkov.filesigner.internal.StreamingSigner
+import com.sarastarquant.filesigner.internal.StreamingSigner
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.io.ByteArrayInputStream

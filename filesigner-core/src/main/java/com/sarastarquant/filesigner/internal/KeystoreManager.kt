@@ -1,10 +1,10 @@
-package io.github.pzverkov.filesigner.internal
+package com.sarastarquant.filesigner.internal
 
 import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.security.keystore.StrongBoxUnavailableException
-import io.github.pzverkov.filesigner.SecurityLevel
+import com.sarastarquant.filesigner.SecurityLevel
 import java.security.KeyPair
 import java.security.KeyPairGenerator
 import java.security.KeyStore

@@ -1,8 +1,8 @@
 # FileSigner SDK
 
-![Build](https://img.shields.io/github/actions/workflow/status/pzverkov/filesigner-sdk-android/build.yml?label=build)
-![CodeQL](https://img.shields.io/github/actions/workflow/status/pzverkov/filesigner-sdk-android/codeql.yml?label=CodeQL)
-![Maven Central](https://img.shields.io/maven-central/v/io.github.pzverkov/filesigner-core?label=maven%20central)
+![Build](https://img.shields.io/github/actions/workflow/status/sara-star-quant/filesigner-sdk-android/build.yml?label=build)
+![CodeQL](https://img.shields.io/github/actions/workflow/status/sara-star-quant/filesigner-sdk-android/codeql.yml?label=CodeQL)
+![Maven Central](https://img.shields.io/maven-central/v/com.sarastarquant/filesigner-core?label=maven%20central)
 ![API](https://img.shields.io/badge/API-26%2B-brightgreen)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.2-purple)
@@ -13,7 +13,7 @@ Hardware-backed ECDSA P-256 file signing SDK for Android. Signs any file using k
 
 ```kotlin
 dependencies {
-    implementation("io.github.pzverkov:filesigner-core:1.0.0")
+    implementation("com.sarastarquant:filesigner-core:0.1.0")
 }
 ```
 

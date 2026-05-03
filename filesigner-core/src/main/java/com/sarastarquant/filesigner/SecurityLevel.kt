@@ -1,4 +1,4 @@
-package io.github.pzverkov.filesigner
+package com.sarastarquant.filesigner
 
 /**
  * Indicates the hardware security level used for key storage and cryptographic operations.

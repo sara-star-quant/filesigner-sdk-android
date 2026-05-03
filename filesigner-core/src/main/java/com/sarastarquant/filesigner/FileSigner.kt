@@ -1,11 +1,11 @@
-package io.github.pzverkov.filesigner
+package com.sarastarquant.filesigner
 
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
-import io.github.pzverkov.filesigner.internal.KeystoreManager
-import io.github.pzverkov.filesigner.internal.StreamingSigner
+import com.sarastarquant.filesigner.internal.KeystoreManager
+import com.sarastarquant.filesigner.internal.StreamingSigner
 import java.io.FileNotFoundException
 
 /**

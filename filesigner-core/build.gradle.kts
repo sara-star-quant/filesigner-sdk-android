@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.pzverkov.filesigner"
+    namespace = "com.sarastarquant.filesigner"
     compileSdk = 35
 
     defaultConfig {

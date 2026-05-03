@@ -1,4 +1,4 @@
-package io.github.pzverkov.filesigner
+package com.sarastarquant.filesigner
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

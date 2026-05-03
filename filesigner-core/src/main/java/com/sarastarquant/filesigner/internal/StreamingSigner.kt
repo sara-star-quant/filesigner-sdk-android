@@ -1,4 +1,4 @@
-package io.github.pzverkov.filesigner.internal
+package com.sarastarquant.filesigner.internal
 
 import java.io.InputStream
 import java.security.PrivateKey
