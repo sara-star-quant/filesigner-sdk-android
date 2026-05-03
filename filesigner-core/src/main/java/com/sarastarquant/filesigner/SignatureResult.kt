@@ -1,4 +1,4 @@
-package io.github.pzverkov.filesigner
+package com.sarastarquant.filesigner
 
 /**
  * Result of a signing operation.
