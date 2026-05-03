@@ -37,6 +37,8 @@ val forcedVersions = mapOf(
     "org.apache.commons:commons-lang3"                 to "3.18.0",
     "com.squareup.wire:wire-runtime"                   to "5.2.0",
     "com.squareup.wire:wire-runtime-jvm"               to "5.2.0",
+    "org.apache.httpcomponents:httpclient"             to "4.5.14",
+    "org.apache.httpcomponents:httpmime"               to "4.5.14",
 )
 
 gradle.beforeProject {
