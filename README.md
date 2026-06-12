@@ -13,7 +13,7 @@ Hardware-backed ECDSA P-256 file signing SDK for Android. Signs any file using k
 
 ```kotlin
 dependencies {
-    implementation("com.sarastarquant:filesigner-core:0.1.0")
+    implementation("com.sarastarquant:filesigner-core:0.1.1")
 }
 ```
 
@@ -48,6 +48,24 @@ when (signer.verify(fileUri, signatureBytes)) {
 }
 ```
 
+### Verifying on another device
+
+The signer and the verifier do not need to be the same device. The signing device
+exports its public key once; any verifier checks signatures with it. No private key
+or hardware is required to verify.
+
+```kotlin
+// On the signing device: export the public key (X.509 SubjectPublicKeyInfo)
+val publicKeyBytes = signer.getPublicKeyEncoded()  // ship this alongside signatures
+
+// On any verifying device: pass the public key explicitly
+when (verifier.verify(fileUri, signatureBytes, publicKeyBytes)) {
+    VerificationResult.Valid -> { /* file is authentic */ }
+    VerificationResult.Invalid -> { /* file was modified */ }
+    is VerificationResult.Error -> { /* bad key bytes or unreadable file */ }
+}
+```
+
 ## Features
 
 | Feature | Detail |
@@ -67,7 +85,8 @@ when (signer.verify(fileUri, signatureBytes)) {
 | Method | Description |
 |--------|-------------|
 | `sign(fileUri: Uri): SignatureResult` | Sign a file, auto-generating a key if needed |
-| `verify(fileUri: Uri, signatureBytes: ByteArray): VerificationResult` | Verify a file against a signature |
+| `verify(fileUri: Uri, signatureBytes: ByteArray): VerificationResult` | Verify a file against a signature using the device's own key |
+| `verify(fileUri: Uri, signatureBytes: ByteArray, publicKeyBytes: ByteArray): VerificationResult` | Verify against an externally supplied public key (relying party / cross-device) |
 | `hasSigningKey(): Boolean` | Check if a signing key exists |
 | `getPublicKeyEncoded(): ByteArray?` | Get the X.509-encoded public key |
 | `getConfig(): SignerConfig` | Get current configuration |
