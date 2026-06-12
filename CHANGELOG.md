@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-06-12
+
+### Added
+- `FileSigner.verify(Uri, ByteArray, ByteArray)` overload for verifying a signature against an externally supplied X.509 public key, enabling relying-party and cross-device verification
+
+## [0.1.0]
+
 ### Added
 - `FileSigner` builder with configurable key alias, StrongBox preference, and max file size
 - `FileSigner.sign(Uri)` for streaming ECDSA P-256 file signing via Android KeyStore

@@ -7,6 +7,9 @@ import android.provider.OpenableColumns
 import com.sarastarquant.filesigner.internal.KeystoreManager
 import com.sarastarquant.filesigner.internal.StreamingSigner
 import java.io.FileNotFoundException
+import java.security.KeyFactory
+import java.security.PublicKey
+import java.security.spec.X509EncodedKeySpec
 
 /**
  * Hardware-backed ECDSA P-256 file signing SDK for Android.
@@ -128,6 +131,47 @@ class FileSigner private constructor(
     }
 
     /**
+     * Verifies a file against a signature using an externally supplied public key.
+     *
+     * Unlike [verify], this does not use the device KeyStore and does not require a
+     * local signing key. Use it to verify a signature produced on another device:
+     * the signer exports its key via [getPublicKeyEncoded], the relying party passes
+     * those bytes here.
+     *
+     * @param fileUri Content URI of the original file.
+     * @param signatureBytes The DER-encoded ECDSA signature bytes to verify against.
+     * @param publicKeyBytes The X.509 (SubjectPublicKeyInfo) encoded EC public key,
+     *                       as returned by [getPublicKeyEncoded].
+     * @return [VerificationResult.Valid], [VerificationResult.Invalid], or [VerificationResult.Error].
+     */
+    fun verify(fileUri: Uri, signatureBytes: ByteArray, publicKeyBytes: ByteArray): VerificationResult {
+        val publicKey = publicKeyFromEncoded(publicKeyBytes)
+            ?: return VerificationResult.Error("Invalid public key")
+
+        val inputStream = try {
+            contentResolver.openInputStream(fileUri)
+                ?: return VerificationResult.Error("File not found")
+        } catch (_: FileNotFoundException) {
+            return VerificationResult.Error("File not found")
+        } catch (_: SecurityException) {
+            return VerificationResult.Error("File access denied")
+        }
+
+        val verifyResult = inputStream.use { stream ->
+            streamingSigner.verify(stream, signatureBytes, publicKey)
+        }
+
+        return verifyResult.fold(
+            onSuccess = { isValid ->
+                if (isValid) VerificationResult.Valid else VerificationResult.Invalid
+            },
+            onFailure = { e ->
+                VerificationResult.Error(e.message ?: "Verification failed")
+            },
+        )
+    }
+
+    /**
      * Returns whether a signing key already exists in Android KeyStore.
      */
     fun hasSigningKey(): Boolean = keystoreManager.hasKey()
@@ -141,6 +185,14 @@ class FileSigner private constructor(
      * Returns the current configuration.
      */
     fun getConfig(): SignerConfig = config
+
+    private fun publicKeyFromEncoded(encoded: ByteArray): PublicKey? {
+        return try {
+            KeyFactory.getInstance("EC").generatePublic(X509EncodedKeySpec(encoded))
+        } catch (_: Exception) {
+            null
+        }
+    }
 
     private fun getFileSize(uri: Uri): Long? {
         return try {
