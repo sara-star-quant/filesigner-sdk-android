@@ -21,3 +21,9 @@ jobs:
 
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v4
+        env:
+          # Only report dependencies that ship in the published library. This excludes
+          # build/test-tooling transitives (netty via the Android test platform, wire via
+          # androidx.benchmark, httpclient via UTP) that are never in the AAR, so Dependabot
+          # stops flagging advisories that cannot affect SDK consumers.
+          DEPENDENCY_GRAPH_INCLUDE_CONFIGURATIONS: releaseRuntimeClasspath
